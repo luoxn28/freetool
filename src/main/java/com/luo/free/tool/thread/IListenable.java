@@ -8,6 +8,9 @@ import java.util.concurrent.Future;
  */
 public interface IListenable {
 
+    /**
+     * 任务执行前置回调，该方法进行抛异常，否则影响任务正常执行
+     */
     default void beforeExecute(Thread t, Runnable r, Object arg) {
     }
 

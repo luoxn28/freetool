@@ -3,7 +3,6 @@ package com.luo.free.tool.test.thread;
 import com.luo.free.tool.thread.IListenable;
 import com.luo.free.tool.thread.ListenableThreadPoolExecutor;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class ListenableThreadPoolExecutorTest {
 
     @Before
     public void before() {
-        this.executor = new ListenableThreadPoolExecutor(2, 5,
+        executor = new ListenableThreadPoolExecutor(2, 5,
                 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
     }
 
@@ -35,7 +34,7 @@ public class ListenableThreadPoolExecutorTest {
 
     @Test
     public void testRunnable() {
-        this.executor.setListenable(new IListenable() {
+        executor.setListenable(new IListenable() {
             public void beforeExecute(Thread t, Runnable r, Object arg) {
                 System.out.println(t.getName() + " " + r + " " + arg);
             }
@@ -44,27 +43,27 @@ public class ListenableThreadPoolExecutorTest {
                 assertTrue(false);
             }
         });
-        this.executor.execute(() -> System.out.println("testRunnable"), "test-arg");
-        this.executor.execute(() -> System.out.println("testRunnable"), "test-arg");
+        executor.execute(() -> System.out.println("testRunnable"), "test-arg");
+        executor.execute(() -> System.out.println("testRunnable"), "test-arg");
     }
 
     @Test
     public void testCallable() {
-        this.executor.setListenable(new IListenable() {
+        executor.setListenable(new IListenable() {
             public void runnableCallback(Runnable r, Throwable t) {
                 assertTrue(false);
             }
         });
-        this.executor.submit(() -> "testCallable");
-        this.executor.submit(() -> "testCallable");
+        executor.submit(() -> "testCallable");
+        executor.submit(() -> "testCallable");
     }
 
     @Test
     public void testNoListenableFuture() throws Exception {
-        this.executor.execute(() -> System.out.println("testNoListenableFuture testRunnable"));
-        this.executor.execute(() -> System.out.println("testNoListenableFuture testRunnable"));
+        executor.execute(() -> System.out.println("testNoListenableFuture testRunnable"));
+        executor.execute(() -> System.out.println("testNoListenableFuture testRunnable"));
 
-        this.executor.submit(() -> "testNoListenableFuture testCallable");
-        this.executor.submit(() -> "testNoListenableFuture testCallable");
+        executor.submit(() -> "testNoListenableFuture testCallable");
+        executor.submit(() -> "testNoListenableFuture testCallable");
     }
 }
