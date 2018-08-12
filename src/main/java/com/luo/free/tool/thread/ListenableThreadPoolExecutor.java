@@ -63,11 +63,12 @@ public class ListenableThreadPoolExecutor extends ThreadPoolExecutor {
             return;
         }
 
-        this.listenable.beforeExecute(t, r, this.argHashMap.remove(r));
+        this.listenable.beforeExecute(t, r, this.argHashMap.get(r));
     }
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
+        Object arg = this.argHashMap.remove(r);
         if (this.listenable == null) {
             return;
         }
@@ -77,5 +78,7 @@ public class ListenableThreadPoolExecutor extends ThreadPoolExecutor {
         } else {
             this.listenable.runnableCallback(r, t);
         }
+
+        this.listenable.afterCallback(this, arg, r, t);
     }
 }

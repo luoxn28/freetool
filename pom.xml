@@ -11,10 +11,10 @@
     <properties>
         <juint.version>4.12</juint.version>
         <lombok.version>1.18.2</lombok.version>
+        <commons.lang3.version>3.7</commons.lang3.version>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -27,6 +27,13 @@
             <artifactId>junit</artifactId>
             <version>${juint.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

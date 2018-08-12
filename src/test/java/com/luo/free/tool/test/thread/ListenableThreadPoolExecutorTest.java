@@ -2,10 +2,13 @@ package com.luo.free.tool.test.thread;
 
 import com.luo.free.tool.thread.IListenable;
 import com.luo.free.tool.thread.ListenableThreadPoolExecutor;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -65,5 +68,37 @@ public class ListenableThreadPoolExecutorTest {
 
         executor.submit(() -> "testNoListenableFuture testCallable");
         executor.submit(() -> "testNoListenableFuture testCallable");
+    }
+
+    @Test
+    public void testAutoTask() {
+        executor.setListenable(new IListenable() {
+            @Override
+            public void beforeExecute(Thread t, Runnable r, Object arg) {
+                System.out.println(DateFormatUtils.format(new Date(), "yyyy-MM-dd hh:mm:ss") + " beforeExecute: " + arg);
+            }
+
+            @Override
+            public void callableCallback(Future future, Runnable r, Throwable t) {
+            }
+
+            @Override
+            public void runnableCallback(Runnable r, Throwable t) {
+            }
+
+            @Override
+            public void afterCallback(ListenableThreadPoolExecutor executor, Object arg, Runnable r, Throwable t) {
+                System.out.println(DateFormatUtils.format(new Date(), "yyyy-MM-dd hh:mm:ss") + " afterCallback: " + arg);
+
+                executor.submit(() -> "hello world", "test-arg");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        executor.submit(() -> "hello world", "test-arg");
     }
 }
