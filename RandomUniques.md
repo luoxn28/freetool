@@ -12,7 +12,7 @@ private static List<Integer> randomUniques(int num, int origin, int bound) {
     Map<Integer, Integer> cache = new HashMap<>();
 
     List<Integer> result = new ArrayList<>();
-    for (int i = bound - 1; i >= 0 && result.size() < num; i--) {
+    for (int i = bound - origin - 1; i >= 0 && result.size() < num; i--) {
         int rand = ThreadLocalRandom.current().nextInt(i + 1);
         result.add(value.apply(cache.getOrDefault(rand, rand)));
         cache.put(rand, i);
