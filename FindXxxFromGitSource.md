@@ -50,11 +50,6 @@ public class FindXxxFromGitSource {
      */
     static String findStr = "xxx";
 
-
-    public static void main2(String[] args) {
-        System.out.println(RuntimeUtil.exec("cmd cd d:\n"));
-    }
-
     public static void main(String[] args) {
         String gitsPath = System.getProperty("user.dir") + systemSeparator + "gits.txt";
         if (!FileUtil.exist(gitsPath)) {
@@ -79,20 +74,12 @@ public class FindXxxFromGitSource {
                 System.out.print(gitName + ": " + JSONUtil.toJsonStr(RuntimeUtil.execForStr("git -C " + savePath + " pull")));
             }
 
-            Boolean flag = false;
-            String fileName = "";
             List<String> fileList = getAllFilePath(Arrays.asList(savePath), fileSuffix);
             for (String file : fileList) {
                 if (FileUtil.readUtf8String(file).contains(findStr)) {
-                    flag = true;
-                    fileName = StrUtil.subAfter(file, systemSeparator, true);
-                    break;
+                    // 包含某个字符串
+                    result.add(gitName + " : " +  StrUtil.subAfter(file, systemSeparator, true));
                 }
-            }
-
-            // 包含某个字符串
-            if (flag) {
-                result.add(gitName + " : " + fileName);
             }
         });
 
