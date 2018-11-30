@@ -9,7 +9,14 @@
 </dependency>
 ```
 
-2.运行代码
+2. 在当前目录`user.dir`下添加`gits.txt`文件，内容是各个git工程名，格式如下：
+```
+project-aaa
+project-bbb
+...
+```
+
+3.运行代码
 ```java
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
